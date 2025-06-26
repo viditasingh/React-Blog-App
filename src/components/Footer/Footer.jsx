@@ -9,7 +9,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand Section */}
           <div className="md:col-span-2">
-            {/* <Link to="/" className="flex items-center mb-4 group"> */}
+            <Link to="/" className="flex items-center mb-4 group">
               <div className="relative w-8 h-8 mr-3">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg group-hover:shadow-lg transition-shadow"></div>
                 <div className="absolute inset-1 bg-white rounded-md flex items-center justify-center">
@@ -17,7 +17,7 @@ function Footer() {
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">React Blog App</h3>
-            {/* </Link> */}
+            </Link>
             <p className="text-gray-600 text-sm leading-relaxed mb-4">
               Discover stories, insights, and ideas from writers around the world. 
               Join our community of readers and creators.
@@ -46,19 +46,19 @@ function Footer() {
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                {/* <Link to="/" className="text-gray-600 hover:text-gray-900 text-sm transition-colors"> */}
+                <Link to="/" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                   Home
-                {/* </Link> */}
+                </Link>
               </li>
               <li>
-                {/* <Link to="/all-posts" className="text-gray-600 hover:text-gray-900 text-sm transition-colors"> */}
+                <Link to="/all-posts" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                   All Posts
-                {/* </Link> */}
+                </Link>
               </li>
               <li>
-                {/* <Link to="/about" className="text-gray-600 hover:text-gray-900 text-sm transition-colors"> */}
+                <Link to="/about" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                   About
-                {/* </Link> */}
+                </Link>
               </li>
             </ul>
           </div>
@@ -68,9 +68,9 @@ function Footer() {
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Support</h4>
             <ul className="space-y-2">
               <li>
-                {/* <Link to="/contact" className="text-gray-600 hover:text-gray-900 text-sm transition-colors"> */}
+                <Link to="/contact" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                   Contact
-                {/* </Link> */}
+                </Link>
               </li>
             </ul>
           </div>
