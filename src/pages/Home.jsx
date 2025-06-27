@@ -118,6 +118,7 @@ export default function Home() {
                                 $id={post.$id}
                                 title={post.title}
                                 featuredImage={post.featuredImage}
+                                author = {post.author}
                             />
                         ))}
                     </div>

@@ -90,12 +90,7 @@ export class Service{
             config.appwriteCId,
             queries
         )
-    } catch (error) {
-        if (error.code === 401) {
-            console.log("Guest user - no posts available yet");
-            return { documents: [] };
-        }
-        
+    } catch (error) {        
         console.log("Appwrite service :: getAll :: error", error);
         return { documents: [] };
     }

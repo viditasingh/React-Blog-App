@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const authStatus = useSelector((state) => state.auth.status)
+  const userData = useSelector((state) => state.auth.userData) // ✅ Add userData selector
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -67,6 +68,18 @@ function Header() {
     }
   ]
 
+  // ✅ Get display name for user
+  const getDisplayName = () => {
+    if (!userData) return 'User'
+    return userData.name || userData.email?.split('@')[0] || 'User'
+  }
+
+  const getUserInitials = () => {
+    const name = getDisplayName()
+    if (name === 'User') return 'U'
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+  }
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <Container>
@@ -108,8 +121,28 @@ function Header() {
             {/* Right Authentication Items */}
             <div className="flex items-center space-x-4">
               {authStatus ? (
-                /* Show Logout Button when authenticated */
-                <LogoutButton />
+                /* ✅ Show User Info and Logout Button when authenticated */
+                <div className="flex items-center space-x-3">
+                  {/* User Avatar and Name */}
+                  <div className="flex items-center space-x-3 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm font-semibold">
+                        {getUserInitials()}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-gray-900">
+                        {getDisplayName()}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        Welcome back!
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Logout Button */}
+                  <LogoutButton />
+                </div>
               ) : (
                 /* Show Sign Up and Login buttons when not authenticated */
                 <ul className="flex items-center space-x-4">
@@ -190,8 +223,28 @@ function Header() {
               {/* Mobile Authentication Section */}
               <div className="border-t border-gray-200 pt-2 mt-2">
                 {authStatus ? (
-                  <div className="px-3 py-2">
-                    <LogoutButton />
+                  <div className="space-y-2">
+                    {/* ✅ Mobile User Info */}
+                    <div className="flex items-center space-x-3 px-3 py-3 mx-1 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-sm font-semibold">
+                          {getUserInitials()}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium text-gray-900">
+                          {getDisplayName()}
+                        </span>
+                        <span className="text-sm text-gray-500">
+                          Welcome back!
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Mobile Logout Button */}
+                    <div className="px-3 py-2">
+                      <LogoutButton />
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-1">

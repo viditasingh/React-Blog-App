@@ -15,7 +15,7 @@ export default function AllPosts() {
 
     useEffect(() => {
         // Only fetch posts if user is authenticated
-        if (authStatus && userData) {
+        if (authStatus) {
             fetchPosts()
         } else {
             setLoading(false)
@@ -27,9 +27,8 @@ export default function AllPosts() {
             setLoading(true)
             setError('')
             
-            const posts = await service.getPosts() // Only get active posts
+            const posts = await service.getAll() 
             if (posts && posts.documents) {
-                // Filter only active posts for public viewing
                 const activePosts = posts.documents.filter(post => post.status === 'active')
                 setPosts(activePosts)
             } else {
