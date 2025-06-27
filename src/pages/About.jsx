@@ -128,7 +128,7 @@ function About() {
                                                      clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)'
                                                  }}>
                                                 <img
-                                                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                                    src="https://i.postimg.cc/RCLR0NN2/Screenshot-2024-07-15-124921.png"
                                                     alt="Vidita Singh"
                                                     className="w-full h-full object-cover"
                                                 />
@@ -147,7 +147,7 @@ function About() {
                                         
                                         {/* Social Links */}
                                         <div className="flex justify-center space-x-4">
-                                            <a href="https://linkedin.com/in/viditasingh" 
+                                            <a href="https://linkedin.com/in/vidita-singh" 
                                                target="_blank" 
                                                rel="noopener noreferrer"
                                                className="p-3 text-gray-400 hover:text-blue-600 transition-all duration-300 hover:scale-110 hover:bg-blue-50 rounded-full">

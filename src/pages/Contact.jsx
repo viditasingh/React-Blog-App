@@ -39,7 +39,7 @@ function Contact() {
                                                  clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)'
                                              }}>
                                             <img
-                                                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                                src="https://i.postimg.cc/RCLR0NN2/Screenshot-2024-07-15-124921.png"
                                                 alt="Vidita Singh"
                                                 className="w-full h-full object-cover"
                                             />
@@ -152,7 +152,7 @@ function Contact() {
 
                                     {/* Resume */}
                                     <a
-                                        href="/resume-vidita-singh.pdf"
+                                        href="https://drive.google.com/file/d/1aYHBpPK7s1YkZg39cauQA80ppVidSano/view?usp=sharing"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-md group"
@@ -175,7 +175,7 @@ function Contact() {
 
                                     {/* LinkedIn */}
                                     <a
-                                        href="https://linkedin.com/in/viditasingh"
+                                        href="https://linkedin.com/in/vidita-singh"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-md group"
