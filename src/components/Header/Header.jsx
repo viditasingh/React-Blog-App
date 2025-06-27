@@ -15,23 +15,33 @@ function Header() {
       active: true
     },
     {
+      name: 'About',
+      url: '/about',
+      active: true 
+    },
+    {
+      name: 'Contact',
+      url: '/contact',
+      active: true
+    },
+    {
       name: 'Login',
       url: '/login',
       active: !authStatus
     },
     {
-      name: 'Signup',
-      url: '/signup',
-      active: !authStatus
-    },
-    {
       name: 'All Posts',
       url: '/all-posts',
+      active: true
+    },
+    {
+      name: 'Add Post',
+      url: '/add-post',
       active: authStatus
     },
     {
-      name: 'Add Post', // Fixed: singular form
-      url: '/add-post',
+      name: 'My Posts',
+      url: '/my-posts',
       active: authStatus
     }
   ]
@@ -54,11 +64,12 @@ function Header() {
                 item.active ? (
                   <li key={item.name}>
                 <button
-                  onClick={() => navigate(item.url)}
-                  className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md hover:bg-gray-50"
-                >
-                  {item.name}
-                </button>
+                      onClick={() => navigate(item.url)}
+                      className="relative text-gray-600 hover:text-white px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:shadow-lg hover:shadow-blue-500/25 transform hover:-translate-y-0.5 group cursor-pointer"
+                    >
+                      <span className="relative z-10">{item.name}</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                    </button>
               </li>
                 ) : null
               )}

@@ -99,6 +99,22 @@ export class Service{
     }
     }
 
+    async getMyPosts(userId) {
+    try {
+        return await this.databases.listDocuments(
+            config.appwriteDbId,
+            config.appwriteCId,
+            [
+                Query.equal('userid', userId),
+                Query.orderDesc('$createdAt')
+            ]
+        )
+    } catch (error) {
+        console.log("Appwrite service :: getMyPosts :: error", error);
+        return { documents: [] };
+    }
+}
+
     //file upload method
     async uploadFile(file){
         try {
