@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { login as storeLogin} from '../store/authSlice'
 import { Button, Input, Logo } from './index'
 import { useDispatch } from 'react-redux'
@@ -14,7 +14,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false)
 
     const login = async(data) => {
-        setError("") // error cleaning
+        setError("")
         setIsLoading(true)
         try {
             const session = await authService.login(data)

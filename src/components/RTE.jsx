@@ -17,7 +17,7 @@ export default function RTE({name, control, label, defaultValue=""}) {
         render={({field: {onChange, value}}) => (
           <div className="border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500">
             <Editor 
-              apiKey="your-tinymce-api-key" // Get free key from TinyMCE
+              apiKey="vqgd5fwppq4y178uzoqjs0inayxicarec8x8xh1gon9jtjyf" // Get free key from TinyMCE
               value={value || defaultValue}
               onEditorChange={onChange}
               init={{

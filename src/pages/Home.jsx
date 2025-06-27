@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import service from '../appwrite/appwriteconfig'
 import { Container, PostCard, LoadingPage } from '../components/index'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 export default function Home() {
     const [posts, setPosts] = useState([])
@@ -10,14 +10,19 @@ export default function Home() {
     const authStatus = useSelector((state) => state.auth.status)
 
     useEffect(() => {
-        service.getAll().then((posts) => {
-            if (posts) {
-                setPosts(posts.documents)
-            }
-            setLoading(false)
-        }).catch(() => {
-            setLoading(false)
-        })
+    service.getAll([])
+    .then((posts) => {
+        if (posts) {
+            setPosts(posts.documents)
+        }
+        setLoading(false)
+    })
+    .catch((error) => {
+        console.log("Home page error:", error)
+        // For 401 errors, still show the page but without posts
+        setPosts([])
+        setLoading(false)
+    })
     }, [])
 
     // Loading state - Use LoadingPage component

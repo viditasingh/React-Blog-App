@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select, RTE } from '../index'
 import service from '../../appwrite/appwriteconfig'
-import { useNavigate } from 'react-router-dom' // Fix: react-router-dom
+import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 
 export default function PostForm({ post }) {
@@ -20,7 +20,7 @@ export default function PostForm({ post }) {
         }
     })
 
-    const userData = useSelector(state => state.auth.userData) // Fix: auth.userData
+    const userData = useSelector(state => state.auth.userData)
 
     const submit = async (data) => {
         setError('')

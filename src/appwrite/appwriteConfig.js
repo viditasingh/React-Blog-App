@@ -81,17 +81,22 @@ export class Service{
         }
     }
 
-    async getAll(queries = [Query.equal('status',['active'])]){
-        try {
-            return await this.databases.listDocuments(
-                config.appwriteDbId,
-                config.appwriteCId,
-                queries
-            )
-        } catch (error) {
-            console.log("Appwrite service :: getAll :: error",error);
-            return false;
+    async getAll(queries = [Query.equal('status', 'active')]){
+    try {
+        return await this.databases.listDocuments(
+            config.appwriteDbId,
+            config.appwriteCId,
+            queries
+        )
+    } catch (error) {
+        if (error.code === 401) {
+            console.log("Guest user - no posts available yet");
+            return { documents: [] };
         }
+        
+        console.log("Appwrite service :: getAll :: error", error);
+        return { documents: [] };
+    }
     }
 
     //file upload method
@@ -122,7 +127,7 @@ export class Service{
         }
     }
 
-    filePreview(fileId){
+    getFilePreview(fileId){
         return this.bucket.getFilePreview(
             config.appwriteBId,
             fileId

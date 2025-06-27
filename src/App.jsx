@@ -2,7 +2,8 @@ import { useDispatch } from 'react-redux'
 import './App.css'
 import { useState, useEffect } from 'react'
 import authService from './appwrite/auth'
-import { login, logout } from './store/authslice'
+import { login, logout } from './store/authSlice'
+import { Outlet } from 'react-router'
 import { LoadingPage, Header, Footer } from './components/index'
 
 function App() {
@@ -19,8 +20,13 @@ function App() {
         dispatch(logout())
       }
     })
-    .finally(()=> setLoading(false))
-  }, [])
+    .catch((error) => {
+        // Fallback - treat as guest user
+        console.log("Auth check failed:", error);
+        dispatch(logout())
+    })
+    .finally(() => setLoading(false))
+    }, [])
   
 
   return !loading?(
@@ -29,7 +35,7 @@ function App() {
         <div className="w-full">
           <Header />
           <main>
-            {/* <Outlet /> */}
+            <Outlet />
           </main>
           <Footer />
         </div>

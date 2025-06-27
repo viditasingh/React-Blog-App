@@ -40,14 +40,21 @@ export class AuthService {
 
     //check whether loggedin or not
     async getCurrentUser(){
-        try {
-            return await this.account.get()
-        } catch (error) {
-            console.log("Appwrite service :: getCurrentUser :: error",error);
+    try {
+        return await this.account.get();
+    } catch (error) {
+        if (error.code === 401) {
+            return null;
         }
-
+        
+        if (error.message?.includes('missing scope (account)')) {
+            return null;
+        }
+        
+        console.log("Appwrite service :: getCurrentUser :: unexpected error", error);
         return null;
     }
+}
 
     async logout(){
         try {

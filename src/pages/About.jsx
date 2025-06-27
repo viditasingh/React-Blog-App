@@ -1,6 +1,5 @@
-import React from 'react'
 import { Container } from '../components/index'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 function About() {
     return (

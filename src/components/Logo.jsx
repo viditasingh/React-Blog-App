@@ -56,10 +56,7 @@ function Logo({
   const currentVariant = variantConfig[variant]
 
   return (
-    <Link 
-      to="/" 
-      className={`inline-flex items-center transition-colors duration-200 ease-in-out group ${currentVariant.container} ${className}`}
-    >
+    <>
       {/* Logo Icon */}
       <div className={`relative ${currentSize.icon} ${currentSize.spacing}`}>
         <div className={`absolute inset-0 ${currentVariant.iconBg} rounded-xl group-hover:shadow-lg transition-shadow duration-200`}></div>
@@ -81,7 +78,7 @@ function Logo({
           )}
         </div>
       )}
-    </Link>
+      </>
   )
 }
 
