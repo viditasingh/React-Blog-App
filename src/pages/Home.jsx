@@ -123,6 +123,26 @@ export default function Home() {
                     </div>
                 </div>
 
+                {/* Call to Action for not logged in users*/}
+                {!authStatus && (<div className="py-16 text-center">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                            Ready to Share Your Story?
+                        </h2>
+                        <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+                            Join our community of writers and readers. Start creating, sharing, and connecting today.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Link
+                                to="/signup"
+                                className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                            >
+                                Join the Community
+                            </Link>
+                        </div>
+                    </div>
+                </div>)}
+
                 {/* Call to Action for Logged In Users */}
                 {authStatus && (
                     <div className="text-center py-12">

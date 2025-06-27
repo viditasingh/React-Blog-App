@@ -207,8 +207,8 @@ function About() {
                                         </p>
 
                                         <p className="text-gray-600 leading-relaxed mb-8">
-                                            When I'm not coding, you can find me exploring new technologies, contributing to open-source 
-                                            projects, or writing about my development journey. I'm always excited to connect with 
+                                            When I'm not coding, you can find me exploring new technologies, working on my DSA skills, 
+                                            or being emersed in competitive programming. I'm always excited to connect with 
                                             fellow developers and learn from the community.
                                         </p>
 

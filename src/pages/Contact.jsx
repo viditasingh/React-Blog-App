@@ -75,9 +75,9 @@ function Contact() {
                                         technologies that push the boundaries of what's possible on the web.
                                     </p>
                                     <p className="text-gray-600 leading-relaxed">
-                                        When I'm not coding, you'll find me contributing to open-source projects, writing 
-                                        technical blogs, or mentoring fellow students. I believe in continuous learning 
-                                        and the power of community in driving innovation.
+                                        When I'm not coding, you can find me exploring new technologies, working on my DSA skills, 
+                                        or being emersed in competitive programming. I'm always excited to connect with 
+                                        fellow developers and learn from the community.
                                     </p>
                                 </div>
                             </div>

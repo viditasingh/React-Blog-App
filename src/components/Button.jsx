@@ -43,6 +43,7 @@ export default function Button({
         ${variantStyles[variant]}
         ${widthStyles}
         ${className}
+        cursor-pointer
     `.trim().replace(/\s+/g, ' ')
     
     return (

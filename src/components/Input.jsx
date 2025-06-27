@@ -1,125 +1,55 @@
-import React, { useId } from 'react'
+import React, { useId, forwardRef } from 'react'
 
-const Input = React.forwardRef(function Input({
-  label,
-  type = 'text',
-  placeholder = '',
-  error = '',
-  helperText = '',
-  required = false,
-  disabled = false,
-  size = 'medium',
-  variant = 'default',
-  leftIcon = null,
-  rightIcon = null,
-  className = '',
-  ...props
+const Input = forwardRef(function Input({
+    label,
+    type = "text",
+    className = "",
+    helperText,
+    error,
+    required = false,
+    ...props
 }, ref) {
-  const id = useId()
-
-  // Size styles
-  const sizeStyles = {
-    small: 'px-3 py-2 text-sm',
-    medium: 'px-4 py-3 text-sm',
-    large: 'px-4 py-4 text-base'
-  }
-
-  // Variant styles
-  const variantStyles = {
-    default: 'border-gray-300 focus:border-blue-500 focus:ring-blue-500',
-    error: 'border-red-300 focus:border-red-500 focus:ring-red-500',
-    success: 'border-green-300 focus:border-green-500 focus:ring-green-500'
-  }
-
-  // Base input styles
-  const inputBaseStyles = 'w-full rounded-lg border bg-white transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed placeholder:text-gray-400'
-
-  // Determine current variant based on error
-  const currentVariant = error ? 'error' : variant
-
-  // Combined input classes
-  const inputClasses = `
-    ${inputBaseStyles}
-    ${sizeStyles[size]}
-    ${variantStyles[currentVariant]}
-    ${leftIcon ? 'pl-10' : ''}
-    ${rightIcon ? 'pr-10' : ''}
-    ${className}
-  `.trim().replace(/\s+/g, ' ')
-
-  // Icon size based on input size
-  const iconSizes = {
-    small: 'w-4 h-4',
-    medium: 'w-5 h-5',
-    large: 'w-5 h-5'
-  }
-
-  // Icon position based on input size
-  const iconPositions = {
-    small: 'top-2 left-3',
-    medium: 'top-3.5 left-3',
-    large: 'top-4 left-3'
-  }
-
-  const rightIconPositions = {
-    small: 'top-2 right-3',
-    medium: 'top-3.5 right-3',
-    large: 'top-4 right-3'
-  }
-
-  return (
-    <div className="w-full">
-      {/* Label */}
-      {label && (
-        <label 
-          className="inline-block text-sm font-medium text-gray-700 mb-2" 
-          htmlFor={id}
-        >
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
-      )}
-
-      {/* Input Container */}
-      <div className="relative">
-        {/* Left Icon */}
-        {leftIcon && (
-          <div className={`absolute ${iconPositions[size]} pointer-events-none`}>
-            <span className={`${iconSizes[size]} text-gray-400`}>
-              {leftIcon}
-            </span>
-          </div>
-        )}
-
-        {/* Input Field */}
-        <input
-          id={id}
-          type={type}
-          className={inputClasses}
-          placeholder={placeholder}
-          disabled={disabled}
-          ref={ref}
-          {...props}
-        />
-
-        {/* Right Icon */}
-        {rightIcon && (
-          <div className={`absolute ${rightIconPositions[size]} pointer-events-none`}>
-            <span className={`${iconSizes[size]} text-gray-400`}>
-              {rightIcon}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* Helper Text or Error Message */}
-      {(helperText || error) && (
-        <p className={`mt-2 text-sm ${error ? 'text-red-600' : 'text-gray-500'}`}>
-          {error || helperText}
-        </p>
-      )}
-    </div>
-  )
+    const id = useId()
+    
+    return (
+        <div className="w-full">
+            {label && (
+                <label 
+                    className="inline-block text-sm font-medium text-gray-700 mb-2 pl-1 transition-colors duration-200 hover:text-gray-900" 
+                    htmlFor={id}
+                >
+                    {label}
+                    {required && (
+                        <span className="text-red-500 ml-1 font-semibold">*</span>
+                    )}
+                </label>
+            )}
+            <input
+                type={type}
+                className={`w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                    hover:border-gray-400 hover:shadow-sm
+                    transition-all duration-200 ease-in-out
+                    disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed
+                    ${error ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''}
+                    ${className}`}
+                ref={ref}
+                {...props}
+                id={id}
+            />
+            {helperText && !error && (
+                <p className="mt-1 text-sm text-gray-500 pl-1">{helperText}</p>
+            )}
+            {error && (
+                <p className="mt-1 text-sm text-red-600 pl-1 flex items-center">
+                    <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {error}
+                </p>
+            )}
+        </div>
+    )
 })
 
 export default Input

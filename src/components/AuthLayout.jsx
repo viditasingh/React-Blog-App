@@ -7,7 +7,7 @@ export default function AuthLayout({children, authentication = true}) {
     //determine children show krne hai ya nahi
     const [loader, setLoader] = useState(true)
     const navigate = useNavigate()
-    const authStatus = useSelector(state => state.auth.satus)
+    const authStatus = useSelector(state => state.auth.status)
 
     useEffect(()=>{
         
