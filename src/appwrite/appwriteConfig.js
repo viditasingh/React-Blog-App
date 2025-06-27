@@ -16,7 +16,7 @@ export class Service{
         this.bucket = new Storage(this.client)
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({title, slug, content, featuredImage, status, userId, author}){
         try {
             return await this.databases.createDocument(
                 config.appwriteDbId, 
@@ -27,7 +27,8 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-                    userId
+                    userId,
+                    author 
                 }
             )
         } catch (error) {
@@ -35,7 +36,7 @@ export class Service{
         }
     }
 
-    async updatePost(slug, {title, content, featuredImage, status}){
+    async updatePost(slug, {title, content, featuredImage, status, author}){
         try {
             return await this.databases.updateDocument(
                 config.appwriteDbId,
@@ -45,11 +46,12 @@ export class Service{
                     title,
                     content,
                     featuredImage,
-                    status
+                    status,
+                    author
                 }
             )
         } catch (error) {
-            console.log("Appwrite service :: updatePost :: error",error);
+            console.log("Appwrite service :: updatePost :: error", error);
         }
     }
 
@@ -105,7 +107,7 @@ export class Service{
             config.appwriteDbId,
             config.appwriteCId,
             [
-                Query.equal('userid', userId),
+                Query.equal('userId', userId),
                 Query.orderDesc('$createdAt')
             ]
         )

@@ -7,27 +7,43 @@ import service from '../appwrite/appwriteconfig'
 export default function MyPosts() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState('')
     const [filter, setFilter] = useState('all') // all, active, inactive
     const navigate = useNavigate()
     const userData = useSelector(state => state.auth.userData)
+    const authStatus = useSelector(state => state.auth.status)
 
+    // Check authentication first
     useEffect(() => {
-        if (userData) {
-            fetchMyPosts()
-        } else {
+        if (!authStatus) {
             navigate('/login')
+            return
         }
-    }, [userData, navigate])
+        
+        if (userData && userData.$id) {
+            fetchMyPosts()
+        }
+    }, [authStatus, userData, navigate])
 
     const fetchMyPosts = async () => {
         try {
             setLoading(true)
+            setError('')
+            
+            console.log('Fetching posts for user:', userData.$id)
+            
             const result = await service.getMyPosts(userData.$id)
+            
             if (result && result.documents) {
+                console.log('Found posts:', result.documents.length)
                 setPosts(result.documents)
+            } else {
+                console.log('No posts found in result')
+                setPosts([])
             }
         } catch (error) {
             console.error('Error fetching user posts:', error)
+            setError('Failed to load your posts. Please try again.')
         } finally {
             setLoading(false)
         }
@@ -36,14 +52,25 @@ export default function MyPosts() {
     const handleDelete = async (postId, imageId) => {
         if (window.confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
             try {
+                console.log('Deleting post:', postId)
+                
                 const success = await service.deletePost(postId)
                 if (success) {
                     // Also delete the featured image
                     if (imageId) {
-                        await service.deleteFile(imageId)
+                        try {
+                            await service.deleteFile(imageId)
+                        } catch (imgError) {
+                            console.warn('Could not delete image:', imgError)
+                        }
                     }
                     // Refresh the posts list
                     fetchMyPosts()
+                    
+                    // Show success message
+                    alert('Post deleted successfully!')
+                } else {
+                    throw new Error('Failed to delete post')
                 }
             } catch (error) {
                 console.error('Error deleting post:', error)
@@ -65,11 +92,42 @@ export default function MyPosts() {
 
     const stats = getPostStats()
 
+    // Loading state
     if (loading) {
         return (
             <Container>
-                <div className="flex justify-center items-center min-h-[400px]">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                <div className="flex flex-col justify-center items-center min-h-[400px]">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+                    <p className="text-gray-600">Loading your posts...</p>
+                </div>
+            </Container>
+        )
+    }
+
+    // Error state
+    if (error) {
+        return (
+            <Container>
+                <div className="py-8">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                        <svg className="mx-auto h-12 w-12 text-red-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 className="text-lg font-medium text-red-800 mb-2">Error Loading Posts</h3>
+                        <p className="text-red-600 mb-4">{error}</p>
+                        <Button 
+                            variant="secondary" 
+                            onClick={fetchMyPosts}
+                            className="mr-4"
+                        >
+                            Try Again
+                        </Button>
+                        <Link to="/add-post">
+                            <Button variant="primary">
+                                Create New Post
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
             </Container>
         )
@@ -141,7 +199,7 @@ export default function MyPosts() {
                             </div>
                             <div className="ml-4">
                                 <p className="text-sm font-medium text-gray-600">Drafts</p>
-                                <p className="text-2xl font-semibold text-gray-900">{stats.inactive}</p>
+                                <p className="text-2xl font-semibent text-gray-900">{stats.inactive}</p>
                             </div>
                         </div>
                     </div>
@@ -187,6 +245,7 @@ export default function MyPosts() {
                                     $createdAt={post.$createdAt}
                                     status={post.status}
                                     slug={post.slug}
+                                    author={post.author}
                                 />
                                 
                                 {/* Action Buttons Overlay */}
@@ -194,7 +253,7 @@ export default function MyPosts() {
                                     <div className="flex space-x-2">
                                         <Link 
                                             to={`/edit-post/${post.$id}`}
-                                            className="bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow duration-200"
+                                            className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-200 border border-white/20"
                                             title="Edit Post"
                                         >
                                             <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,7 +263,7 @@ export default function MyPosts() {
                                         
                                         <button
                                             onClick={() => handleDelete(post.$id, post.featuredImage)}
-                                            className="bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow duration-200"
+                                            className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:shadow-xl transition-all duration-200 border border-white/20 cursor-pointer"
                                             title="Delete Post"
                                         >
                                             <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,12 +277,15 @@ export default function MyPosts() {
                     </div>
                 ) : (
                     <div className="text-center py-12">
-                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No posts found</h3>
-                        <p className="mt-1 text-sm text-gray-500">
-                            {filter === 'all' ? "You haven't created any posts yet." : `You don't have any ${filter} posts.`}
+                        <h3 className="mt-2 text-lg font-medium text-gray-900">No posts found</h3>
+                        <p className="mt-1 text-gray-500">
+                            {filter === 'all' 
+                                ? "You haven't created any posts yet. Start sharing your thoughts with the world!" 
+                                : `You don't have any ${filter} posts.`
+                            }
                         </p>
                         <div className="mt-6">
                             <Link to="/add-post">

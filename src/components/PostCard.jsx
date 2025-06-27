@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import service from '../appwrite/appwriteconfig'
 import { Link } from 'react-router';
 
-export default function PostCard({ $id, title, featuredImage, $createdAt, status }) {
+export default function PostCard({ $id, title, featuredImage, $createdAt, status, author }) {
     const [imageError, setImageError] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -56,36 +56,67 @@ export default function PostCard({ $id, title, featuredImage, $createdAt, status
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
             <Link to={`/post/${$id}`}>
-            <div className="aspect-video w-full bg-gray-200 relative">
-                {imageSrc ? (
-                    <>
-                        {!imageLoaded && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div className="aspect-video w-full bg-gray-200 relative">
+                    {imageSrc ? (
+                        <>
+                            {!imageLoaded && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                                </div>
+                            )}
+                            <img
+                                src={imageSrc}
+                                alt={title || 'Blog post'}
+                                className={`w-full h-full object-cover transition-opacity duration-200 ${
+                                    imageLoaded ? 'opacity-100' : 'opacity-0'
+                                }`}
+                                onError={handleImageError}
+                                onLoad={handleImageLoad}
+                            />
+                        </>
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                            <span className="text-gray-400">No Image</span>
+                        </div>
+                    )}
+                </div>
+                
+                <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                        {title}
+                    </h3>
+                    
+                    {/*  Add author info */}
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                        <div className="flex items-center">
+                            <div className="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mr-2">
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                </svg>
                             </div>
-                        )}
-                        <img
-                            src={imageSrc}
-                            alt={title || 'Blog post'}
-                            className={`w-full h-full object-cover transition-opacity duration-200 ${
-                                imageLoaded ? 'opacity-100' : 'opacity-0'
-                            }`}
-                            onError={handleImageError}
-                            onLoad={handleImageLoad}
-                        />
-                    </>
-                ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                        <span className="text-gray-400">No Image</span>
+                            <span className="font-medium">
+                                {author || 'Anonymous'}
+                            </span>
+                        </div>
+                        
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                            status === 'active' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-gray-100 text-gray-800'
+                        }`}>
+                            {status === 'active' ? 'Published' : 'Draft'}
+                        </span>
                     </div>
-                )}
-            </div>
-            
-            <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                    {title}
-                </h3>
-            </div>
+                    
+                    {/* Add creation date */}
+                    <div className="mt-2 text-xs text-gray-400">
+                        {new Date($createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        })}
+                    </div>
+                </div>
             </Link>
         </div>
     )

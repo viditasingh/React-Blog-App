@@ -47,8 +47,12 @@ export default function PostForm({ post }) {
             }
 
             const dbPost = await service.updatePost(post.$id, {
-                ...data, 
-                featuredImage: file ? file.$id : post.featuredImage  // Keep old image if no new one
+                title: data.title,
+                slug: data.slug,
+                content: data.content,
+                featuredImage: file ? file.$id : post.featuredImage,
+                status: data.status,
+                author: userData.name || userData.email || 'Anonymous'
             })
             
             if (dbPost) {
@@ -57,19 +61,22 @@ export default function PostForm({ post }) {
         } else {
             // Create new post
             if (!data.featuredImage || !data.featuredImage[0]) {
-                throw new Error('Featured image is required for new posts')
+                setError('Featured image is required for new posts')
+                setIsLoading(false)
+                return
             }
 
             const file = await service.uploadFile(data.featuredImage[0])
 
-            if (file) {
+            if (file && file.$id) {
                 const dbPost = await service.createPost({
                     title: data.title,
                     slug: data.slug,
                     content: data.content,
                     featuredImage: file.$id,
                     status: data.status,
-                    userId: userData.$id
+                    userId: userData.$id,
+                    author: userData.name || userData.email || 'Anonymous' 
                 })
                 
                 if (dbPost) {
@@ -105,7 +112,10 @@ export default function PostForm({ post }) {
     useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === 'title') {
-                setValue('slug', slugTransform(value.title), { shouldValidate: true })
+                const currentSlug = getValues('slug')
+                if (!post || !currentSlug) {
+                    setValue('slug', slugTransform(value.title), { shouldValidate: true })
+                }
             }
         })
 
@@ -180,9 +190,9 @@ export default function PostForm({ post }) {
                                     <Input
                                         label="URL Slug"
                                         placeholder="url-friendly-slug"
-                                        helperText="Auto-generated from title"
+                                        helperText={post ? "Slug cannot be changed after creation" : "Auto-generated from title, but you can edit it"}
                                         error={errors.slug?.message}
-                                        required ={true}
+                                        required={true}
                                         {...register('slug', {
                                             required: 'Slug is required',
                                             pattern: {
@@ -285,8 +295,8 @@ export default function PostForm({ post }) {
                                     </div>
                                     <div>
                                         <span className="text-xs font-medium text-gray-500">Slug:</span>
-                                        <p className="text-sm text-gray-900 truncate">
-                                            /{watch('slug') || 'enter-a-title'}
+                                        <p className="text-sm text-gray-900 truncate flex items-center">
+                                            /{watch('slug') || post?.slug ||'enter-a-title'}
                                         </p>
                                     </div>
                                     <div>
