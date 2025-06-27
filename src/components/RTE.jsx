@@ -1,6 +1,7 @@
 import { Editor } from '@tinymce/tinymce-react'
 import React from 'react'
 import { Controller } from 'react-hook-form'
+import config from '../config/config'
 
 export default function RTE({name, control, label, defaultValue=""}) {
   return (
@@ -17,7 +18,7 @@ export default function RTE({name, control, label, defaultValue=""}) {
         render={({field: {onChange, value}}) => (
           <div className="border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500">
             <Editor 
-              apiKey="vqgd5fwppq4y178uzoqjs0inayxicarec8x8xh1gon9jtjyf" // Get free key from TinyMCE
+              apiKey={config.tinymce_api}
               value={value || defaultValue}
               onEditorChange={onChange}
               init={{
