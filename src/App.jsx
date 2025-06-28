@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux'
 import './App.css'
 import { useState, useEffect } from 'react'
-import authService from './appwrite/auth'
-import { login, logout } from './store/authSlice'
+import authService from './appwrite/auth.js'
+import { login, logout } from './store/authSlice.js'
 import { Outlet } from 'react-router'
-import { LoadingPage, Header, Footer } from './components/index'
+import { LoadingPage, Header, Footer } from './components/index.js'
 
 function App() {
   

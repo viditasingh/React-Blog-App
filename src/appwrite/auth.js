@@ -1,5 +1,5 @@
 import { useActionData } from "react-router";
-import config from "../config/config";
+import config from "../config/config.js";
 
 import {Client, Account, ID} from "appwrite";
 

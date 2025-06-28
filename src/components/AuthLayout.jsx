@@ -1,7 +1,7 @@
 import React, { Children, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { LoadingPage } from './index'
+import { LoadingPage } from './index.js'
 
 export default function AuthLayout({children, authentication = true}) {
     //determine children show krne hai ya nahi

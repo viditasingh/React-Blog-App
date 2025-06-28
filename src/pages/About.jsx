@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { Container } from '../components/index'
+import { Container } from '../components/index.js'
 import { Link } from 'react-router'
 useSelector
 

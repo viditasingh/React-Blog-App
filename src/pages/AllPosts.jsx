@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router'
-import { Container, PostCard, LoadingPage, Button } from '../components/index'
-import service from '../appwrite/appwriteconfig'
+import { Container, PostCard, LoadingPage, Button } from '../components/index.js'
+import service from '../appwrite/appwriteconfig.js'
 
 export default function AllPosts() {
     const [posts, setPosts] = useState([])

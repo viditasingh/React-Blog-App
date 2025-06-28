@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, PostForm, LoadingPage } from '../components/index'
+import { Container, PostForm, LoadingPage } from '../components/index.js'
 import service from '../appwrite/appwriteconfig.js'
 import { useNavigate, useParams } from 'react-router'
 

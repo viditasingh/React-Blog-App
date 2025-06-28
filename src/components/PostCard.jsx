@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import service from '../appwrite/appwriteconfig'
+import service from '../appwrite/appwriteconfig.js'
 import { Link } from 'react-router';
 
 export default function PostCard({ $id, title, featuredImage, $createdAt, status, author }) {

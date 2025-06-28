@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from '../components/index'
+import { Container } from '../components/index.js'
 
 function Contact() {
     return (
