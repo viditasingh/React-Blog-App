@@ -190,7 +190,7 @@ export default function PostForm({ post }) {
                                     <Input
                                         label="URL Slug"
                                         placeholder="url-friendly-slug"
-                                        helperText={post ? "Slug cannot be changed after creation" : "Auto-generated from title, but you can edit it"}
+                                        helperText={"Auto-generated from title, but you can edit it"}
                                         error={errors.slug?.message}
                                         required={true}
                                         {...register('slug', {
@@ -227,7 +227,7 @@ export default function PostForm({ post }) {
                                     <Select
                                         label="Post Status"
                                         options={['active', 'inactive']}
-                                        required={true}  // ✅ Add required prop to Select if needed
+                                        required={true} 
                                         {...register('status', {
                                             required: 'Status is required'
                                         })}

@@ -97,7 +97,7 @@ function Post() {
                     </div>
                     
                     {/* Author Actions - Only visible to post author */}
-                    {userData && (
+                    {isAuthor && (
                         <div className="absolute top-4 right-4 flex space-x-2">
                             <Link to={`/edit-post/${post.$id}`}>
                                 <Button
