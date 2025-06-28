@@ -1,7 +1,10 @@
+import { useSelector } from 'react-redux'
 import { Container } from '../components/index'
 import { Link } from 'react-router'
+useSelector
 
 function About() {
+    const authStatus = useSelector((state) => state.auth.status)
     return (
         <div className="min-h-screen bg-gray-50">
             <Container>
@@ -230,7 +233,7 @@ function About() {
                 </div>
 
                 {/* Call to Action */}
-                <div className="py-16 text-center">
+                {!authStatus && (<div className="py-16 text-center">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
                         <h2 className="text-3xl font-bold text-gray-900 mb-4">
                             Ready to Share Your Story?
@@ -253,7 +256,7 @@ function About() {
                             </Link>
                         </div>
                     </div>
-                </div>
+                </div>)}
             </Container>
         </div>
     )
