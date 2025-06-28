@@ -12,8 +12,12 @@ export default function Home() {
     useEffect(() => {
     service.getAll([])
     .then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
+        if (posts && posts.documents) {
+                const latestPosts = posts.documents
+                    .sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt))
+                    .slice(0, 3)
+                
+                setPosts(latestPosts)
         }
         setLoading(false)
     })
@@ -107,6 +111,19 @@ export default function Home() {
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                         Discover insights, stories, and ideas from our community of writers
                     </p>
+                    {authStatus && (
+                        <div className="mt-6">
+                            <Link
+                                to="/all-posts"
+                                className="inline-flex items-center text-blue-600 hover:text-blue-500 font-medium"
+                            >
+                                View all posts
+                                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {/* Posts Grid */}
@@ -121,6 +138,20 @@ export default function Home() {
                                 author = {post.author}
                             />
                         ))}
+                    </div>
+                    <div className="text-center mt-8">
+                        <p className="text-gray-600 mb-4">
+                            Showing the latest {posts.length} post{posts.length !== 1 ? 's' : ''}
+                        </p>
+                        <Link
+                            to="/all-posts"
+                            className="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                        >
+                            Explore All Posts
+                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
                     </div>
                 </div>
 
