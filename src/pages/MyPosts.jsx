@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
 import { Container, PostCard, Button } from '../components/index.js'
-import service from '../appwrite/appwriteconfig.js'
+import service from '../appwrite/appwriteconfig'
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([])
