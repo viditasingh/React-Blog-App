@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import service from '../appwrite/appwriteconfig.js'
+import service from '../appwrite/appwriteConfig.js'
 import { Container, PostCard, LoadingPage } from '../components/index.js'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router'
