@@ -21,7 +21,7 @@ export default function PostCard({ $id, title, featuredImage, $createdAt, status
             console.error('Error generating image URL:', error);
             // Fallback to direct view
             try {
-                return service.getFileView(featuredImage);
+                return service.getFilePreview(featuredImage);
             } catch (fallbackError) {
                 console.error('Fallback URL also failed:', fallbackError);
                 return null;
@@ -43,7 +43,7 @@ export default function PostCard({ $id, title, featuredImage, $createdAt, status
         }
         
         // Use placeholder
-        e.target.src = 'https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=Image+Not+Available';
+        e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
     };
 
     const handleImageLoad = () => {
