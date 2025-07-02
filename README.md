@@ -3,7 +3,7 @@
 A modern, production-ready blog application built with React, featuring authentication, rich text editing, and cloud storage capabilities.
 
 ## Check it Out
-[React Blog App Link]([https://viditasingh.github.io/](https://react-blog-app-pi-mauve.vercel.app/))
+[React Blog App Link](https://react-blog-app-pi-mauve.vercel.app/)
 
 ## 🚀 Features
 
